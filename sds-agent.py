@@ -70,7 +70,7 @@ def main():
     # ----------------------------
     st.image("logo.png", width=200)
     st.title("Chemical Management Agent")
-    st.text("I'm your Chemical Manaegement Agent. How can I help?")
+    st.text("I'm your Chemical Management Agent. How can I help?")
     
     # ----------------------------
     # File Uploader and Progress Bar
