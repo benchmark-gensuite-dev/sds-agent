@@ -62,7 +62,7 @@ def main():
     # Sidebar Configuration
     # ----------------------------
     st.sidebar.image("genny.png", width=150)
-    st.sidebar.title("Genny AI Agent Hub")
+    #st.sidebar.title("Genny AI Agent")
     st.sidebar.info("You're talking to the Chemical Management Agent.")
     
     # ----------------------------
