@@ -43,7 +43,7 @@ from langchain_community.tools.tavily_search import TavilySearchResults
 llm = ChatAnthropic(
             model="claude-3-5-sonnet-20241022",
             temperature=0.5,
-            max_tokens=1024,
+            max_tokens=4096,
             anthropic_api_key=os.getenv("ANTHROPIC_API_KEY")
         )
 
@@ -271,7 +271,7 @@ def extract_and_assess_sds(pdf_text: str) -> str:
         tools=tools_for_agent,
         verbose=False,
         handle_parsing_errors=True,
-        max_iterations=7,
+        max_iterations=9,
         early_stopping_method="force",  # changed from "generate"
         return_intermediate_steps=True  # add this flag to capture the scratchpad
     )
