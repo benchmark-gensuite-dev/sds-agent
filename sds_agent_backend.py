@@ -79,7 +79,7 @@ tavily_tool_base = TavilySearchResults(
 
 def tavily_search(query: str) -> str:
     global tavily_search_call_count
-    st.info(f"Searching the web with Tavily for: {query}")
+    st.info(f"Searching the web with Tavily for: {query}", icon="🔍")
     tavily_search_call_count += 1
     #logging.info(f"[Tavily Tool] Call #{tavily_search_call_count} with query: {query}")
     return tavily_tool_base.run(query)
@@ -116,7 +116,7 @@ def tavily_extract(url: str) -> str:
 ###############################################################################
 def serp_search(query: str) -> str:
     global serp_search_call_count
-    st.info(f"Searching the web with SERP for: {query}")
+    st.info(f"Searching the web with SERP for: {query}", icon="🐍")
     serp_search_call_count += 1
     #logging.info(f"[SERPAPI] Call #{serp_search_call_count} with query: {query}")
     api_key = os.getenv("SERPAPI_API_KEY")
@@ -269,7 +269,7 @@ def extract_and_assess_sds(pdf_text: str) -> str:
     agent_executor = AgentExecutor(
         agent=agent,
         tools=tools_for_agent,
-        verbose=True,
+        verbose=False,
         handle_parsing_errors=True,
         max_iterations=7,
         early_stopping_method="force",  # changed from "generate"
