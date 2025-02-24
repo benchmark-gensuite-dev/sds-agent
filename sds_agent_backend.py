@@ -212,7 +212,7 @@ Process:
 1. Analyze the provided PDF text and identify the chemical and manufacturer.
 2. Search for the latest updated SDS for the chemical using serp_search and tavily_search (the given version may be older).
    IMPORTANT: Use both "tavily_search" and "serp_search" at least once.
-    Example  query: "latest Safety data sheet from [manufacturer name], for [insert chemical]", etc. 
+    Example  query: "latest Safety data sheet from [manufacturer name], for [insert chemical] from 2025 2024 2023 2022", etc. 
 3. If an updated SDS link is found, also consider using tavily_extract if needed to confirm details.
 4. Compare the updated SDS with the old PDF version, find any differences in hazard/constituents.
 5. Provide a final answer referencing the updated SDS date and link.
