@@ -54,14 +54,14 @@ def main():
     # Configure the page
     st.set_page_config(
         page_title="Chemical Management Agent",
-        page_icon="gennyai.png",
+        page_icon="genny.png",
         layout="wide"
     )
     
     # ----------------------------
     # Sidebar Configuration
     # ----------------------------
-    st.sidebar.image("gennyai.png", width=150)
+    st.sidebar.image("genny.png", width=150)
     st.sidebar.title("Genny AI Agent Hub")
     st.sidebar.info("You're talking to the Chemical Management Agent.")
     
