@@ -271,8 +271,8 @@ def extract_and_assess_sds(pdf_text: str) -> str:
         tools=tools_for_agent,
         verbose=True,
         handle_parsing_errors=True,
-        max_iterations=15,
-        early_stopping_method="force"
+        max_iterations=7,
+        early_stopping_method="generate"
     )
     
     user_msg = "Please extract key SDS info, check for updates, and summarize."
