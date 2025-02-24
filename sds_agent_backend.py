@@ -265,14 +265,15 @@ def extract_and_assess_sds(pdf_text: str) -> str:
         stop_sequence=True
     )
     
-    # Limit steps to avoid infinite loops:
+    # Use "force" (not "generate") and enable returning intermediate steps
     agent_executor = AgentExecutor(
         agent=agent,
         tools=tools_for_agent,
         verbose=True,
         handle_parsing_errors=True,
         max_iterations=7,
-        early_stopping_method="generate"
+        early_stopping_method="force",  # changed from "generate"
+        return_intermediate_steps=True  # add this flag to capture the scratchpad
     )
     
     user_msg = "Please extract key SDS info, check for updates, and summarize."
@@ -284,16 +285,43 @@ def extract_and_assess_sds(pdf_text: str) -> str:
         "agent_scratchpad": ""
     }
 
-    # Use .invoke() for multiple inputs:
+    # Run the agent
     result = agent_executor.invoke(inputs)
-
-    # If the agent returns a dict with the final result in "output" key:
+    
+    # Get the final output from the result
     if isinstance(result, dict):
         final_output = result.get("output", "")
     else:
         final_output = result
-    
+
+    # If the final output doesn't include a final answer, do one extra LLM call
+    if "Final Answer:" not in final_output:
+        # Extract the intermediate steps (if any) to build a final scratchpad
+        intermediate_steps = result.get("intermediate_steps", [])
+        final_scratchpad = ""
+        for action, observation in intermediate_steps:
+            final_scratchpad += f"Action: {action}\nObservation: {observation}\n"
+        
+        # Rebuild the prompt with the final scratchpad included
+        final_inputs = {
+            "pdf_text": pdf_text,
+            "input": user_msg,
+            "tools": tools_str,
+            "tool_names": tool_names,
+            "agent_scratchpad": final_scratchpad
+        }
+        final_prompt = prompt_template.format(**final_inputs)
+        # Call the LLM directly with the final prompt to generate the final answer
+        final_llm_response = llm.call_as_llm(final_prompt)
+        final_llm_text = final_llm_response.strip()
+        if "Final Answer:" in final_llm_text:
+            final_output = final_llm_text.split("Final Answer:", 1)[-1].strip()
+        else:
+            final_output = final_llm_text
+
+    # Optionally, if your final answer always begins with "Final Answer:", remove it:
     if "Final Answer:" in final_output:
-        return final_output.split("Final Answer:", 1)[-1].strip()
-    else:
-        return final_output
+        final_output = final_output.split("Final Answer:", 1)[-1].strip()
+
+    return final_output
+
