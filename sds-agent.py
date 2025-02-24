@@ -61,14 +61,14 @@ def main():
     # ----------------------------
     # Sidebar Configuration
     # ----------------------------
-    st.sidebar.image("genny.png", width=150)
+    # st.sidebar.image("genny.png", width=150)
     #st.sidebar.title("Genny AI Agent")
-    st.sidebar.info("You're talking to the Chemical Management Agent.")
+    # st.sidebar.info("You're talking to the Chemical Management Agent.")
     
     # ----------------------------
     # Header with App Logo and Title
     # ----------------------------
-    st.image("logo.png", width=200)
+    # st.image("logo.png", width=200)
     st.title("Chemical Management Agent")
     st.text("I'm your Chemical Management Agent. How can I help?")
     
@@ -121,11 +121,11 @@ def main():
     # ----------------------------
     # Display Custom Footer
     # ----------------------------
-    custom_footer()
+    # custom_footer()
 
 if __name__ == "__main__":
     main()
 
 # Footer
-st.markdown("---")
-st.markdown("Made with ❤️ using Streamlit")
+# st.markdown("---")
+# st.markdown("Made with ❤️ using Streamlit")
