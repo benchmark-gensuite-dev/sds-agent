@@ -18,6 +18,12 @@ os.environ["TAVILY_API_KEY"] = st.secrets["TAVILY_API_KEY"]
 
 st.cache_data.clear()
 
+llm = ChatAnthropic(
+            model="claude-3-5-sonnet-20241022",
+            temperature=0.2,
+            max_tokens=1024,
+            anthropic_api_key=os.getenv("ANTHROPIC_API_KEY")
+        )
 # Set up logging
 logging.basicConfig(level=logging.INFO)
 
@@ -210,12 +216,7 @@ if uploaded_file is not None:
             st.text_area("PDF Content", sds_text, height=200)
         
         # Initialize LLM with Claude
-        llm = ChatAnthropic(
-            model="claude-3-5-sonnet-20241022",
-            temperature=0.2,
-            max_tokens=1024,
-            anthropic_api_key=os.getenv("ANTHROPIC_API_KEY")
-        )
+        
         
         # Prepare tools and prompt
         tools_for_agent = [tavily_search_tool, serp_search_tool, tavily_extract_tool]
