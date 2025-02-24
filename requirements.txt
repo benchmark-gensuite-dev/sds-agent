@@ -1,0 +1,7 @@
+streamlit
+pdfplumber
+requests
+anthropic
+langchain
+langchain-community
+tavily-search
