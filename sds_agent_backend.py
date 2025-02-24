@@ -42,7 +42,7 @@ from langchain_community.tools.tavily_search import TavilySearchResults
 
 llm = ChatAnthropic(
             model="claude-3-5-sonnet-20241022",
-            temperature=0.2,
+            temperature=0.5,
             max_tokens=1024,
             anthropic_api_key=os.getenv("ANTHROPIC_API_KEY")
         )
@@ -81,14 +81,14 @@ def tavily_search(query: str) -> str:
     global tavily_search_call_count
     st.info(f"Searching the web with Tavily for: {query}")
     tavily_search_call_count += 1
-    logging.info(f"[Tavily Tool] Call #{tavily_search_call_count} with query: {query}")
+    #logging.info(f"[Tavily Tool] Call #{tavily_search_call_count} with query: {query}")
     return tavily_tool_base.run(query)
 
 def tavily_extract(url: str) -> str:
     global tool_call_cache
     key = ("tavily_extract", url)
     if key in tool_call_cache:
-        logging.info(f"[Tavily Extract] Cache hit for URL: {url}")
+        #logging.info(f"[Tavily Extract] Cache hit for URL: {url}")
         return tool_call_cache[key]
     
     api_key = os.getenv("TAVILY_API_KEY")
@@ -118,7 +118,7 @@ def serp_search(query: str) -> str:
     global serp_search_call_count
     st.info(f"Searching the web with SERP for: {query}")
     serp_search_call_count += 1
-    logging.info(f"[SERPAPI] Call #{serp_search_call_count} with query: {query}")
+    #logging.info(f"[SERPAPI] Call #{serp_search_call_count} with query: {query}")
     api_key = os.getenv("SERPAPI_API_KEY")
     if not api_key:
         return "Error: SERPAPI_API_KEY environment variable not set."
