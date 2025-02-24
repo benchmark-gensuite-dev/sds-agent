@@ -4,4 +4,4 @@ requests
 anthropic
 langchain
 langchain-community
-
+langchain_anthropic
