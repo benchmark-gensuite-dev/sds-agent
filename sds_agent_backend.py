@@ -79,7 +79,7 @@ tavily_tool_base = TavilySearchResults(
 
 def tavily_search(query: str) -> str:
     global tavily_search_call_count
-    st.info(f"Searching the web for: {query}")
+    st.info(f"Searching the web with Tavily for: {query}")
     tavily_search_call_count += 1
     logging.info(f"[Tavily Tool] Call #{tavily_search_call_count} with query: {query}")
     return tavily_tool_base.run(query)
@@ -116,7 +116,7 @@ def tavily_extract(url: str) -> str:
 ###############################################################################
 def serp_search(query: str) -> str:
     global serp_search_call_count
-    st.info(f"Searching the web for: {query}")
+    st.info(f"Searching the web with SERP for: {query}")
     serp_search_call_count += 1
     logging.info(f"[SERPAPI] Call #{serp_search_call_count} with query: {query}")
     api_key = os.getenv("SERPAPI_API_KEY")
@@ -212,14 +212,15 @@ Process:
 1. Analyze the provided PDF text and identify the chemical and manufacturer.
 2. Search for the latest updated SDS for the chemical using serp_search and tavily_search (the given version may be older).
    IMPORTANT: Use both "tavily_search" and "serp_search" at least once.
-    Example tavily query: "Chemical Agent [insert name] from [manufacturer name] latest sds 2025 2024"
+    Example tavily query: "Chemical Agent [insert name] from [manufacturer name] latest sds 2025 2024 2023", "latest Safety data sheet from [manufacturer name], for [insert chemical]", etc. 
 3. If an updated SDS link is found, also consider using tavily_extract if needed to confirm details.
 4. Compare the updated SDS with the old PDF version, find any differences in hazard/constituents.
 5. Provide a final answer referencing the updated SDS date and link.
 6. The final answer should begin with "Final Answer:" and mention the date of the latest SDS with a link.
 
 
-**DRAFT FINAL ANSWER AFTER A MAXIMUM OF 5 TOOL CALLS**
+**DRAFT FINAL ANSWER AFTER A MAXIMUM OF 5 TOOL CALLS** 
+**PLEASE DO NOT CALL TOOLS FOR MORE THAN A COMBINED 5. AFTER 5, GIVE YOUR BEST FINAL ANSWER. WE DO NOT WANT TO KEEP THE USER WAITING.**
 Example:
 Question: What is the latest SDS for Bird Stop?
 Thought: I need to find the updated SDS, so I will use tavily_search...
@@ -270,7 +271,7 @@ def extract_and_assess_sds(pdf_text: str) -> str:
         tools=tools_for_agent,
         verbose=True,
         handle_parsing_errors=True,
-        max_iterations=7,
+        max_iterations=15,
         early_stopping_method="force"
     )
     
