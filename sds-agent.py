@@ -53,7 +53,7 @@ def custom_footer():
 def main():
     # Configure the page
     st.set_page_config(
-        page_title="Chemical Management Agent",
+        page_title="Chemical Management AI Agent",
         page_icon="genny.png",
         layout="wide"
     )
@@ -69,8 +69,8 @@ def main():
     # Header with App Logo and Title
     # ----------------------------
     # st.image("logo.png", width=200)
-    st.title("Chemical Management Agent")
-    st.text("I'm your Chemical Management Agent. How can I help?")
+    st.title("Chemical Management AI Agent")
+    st.text("I'm your Chemical Management AI Agent. How can I help?")
     
     # ----------------------------
     # File Uploader and Progress Bar
